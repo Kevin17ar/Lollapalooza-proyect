@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria Lolla Arg</title>
+    <link rel="icon" href="./img/favicon.ico">
+    <!-- Bootstrap 5.1 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <!-- CSS Local -->
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/gallery.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Knewave&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <nav class="nav" id="blur">     
+                <ul>
+                    <li><a href="./index.html" class="first">Inicio</a></li>
+                    <li><a href="./gallery.html" class="last">Galeria</a></li>
+                    <li><a href="./tickets.html" class="last">Tickets</a></li>
+                    <li><a href="./store.html" class="last">Tienda</a></li>
+                    <li><a href="./login.html" class="last">Login</a></li>
+                </ul>
+            </nav>  
+        </header>
+        <main id="mainGallery">
+            <!--SECCION DE FOTOS -->
+            <div class="previousLolla">
+                <section id="carouselOfPics">
+                    <div class="container mt-4">
+                        <div class="carousel" >
+                            <input v-for="info in images" type="radio"  :value="info.id" name="imageId" :id="info.id" v-model="imageId">
+                            <ul class="carousel__slides">
+                                <li v-for="info in images" class="carousel__slide">
+                                    <figure>
+                                        <div>
+                                            <img class="carousel_img" :src="info.url" alt="">
+                                        </div>
+                                        <figcaption class="caption_carousel">
+                                            {{info.description}}
+                                            <span class="credit">Photo: Lolla Press&REG;</span>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                            </ul>    
+                            <ul class="carousel__thumbnails">
+                                <li v-for="info in images">
+                                    <label @click="allComments(info.id)" :for="info.id" class="minImages"><img :src="info.url" alt=""></label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <!-- SECCION DE COMENTARIOS -->
+                <section id="commentsSec">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-5 col-md-6 col-12 pb-4" id="boxThecomments">
+                                <h1 id="h1-comments">Comentarios</h1>
+                                <h3 v-if="comments.length <= 0" id="noComments">Sin comentarios en esta foto por ahora, podes ser el primero en comentar😎</h3> 
+                                <div class="comment mt-4 text-justify float-left theComments" v-for="info in comments">
+                                    <h4>{{info.userName}} </h4>
+                                     <span> {{formatDate(info.createdAt)}}</span>
+                                    <i v-if="info.email == userEmail" @click="showText(info)" type="button" id="editComment" data-bs-toggle="modal" data-bs-target="#exampleModal" class="fas fa-edit"></i>
+                                    <p class="theText">{{info.text}}<i v-if="info.email == userEmail || userEmail == 'admin@admin.com'" @click="deleteComment(info.id)" class="far fa-trash-alt"></i></p>
+                                </div>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Editar comentario</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <label id="comentarioAc" for="msg">Comentario actual:</label> <textarea name="msg" id="msg" v-model="newText"  msg cols="30" rows="5" class="form-control"></textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" id="close" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" id="save" v-if="newText.length <= 240 && newText.length > 0"  @click="editComment" class="btn btn-success" data-bs-dismiss="modal">Guardar cambios</button>
+                                                <p id="comment_limit" v-if="newText.length >= 240">Superaste el limite de caracteres por comentario(240)</p> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+                                <form id="align-form">
+                                    <div class="form-group">
+                                        <h4>Dejanos tu comentario</h4> <label for="commentLength" id="mensaje">Mensaje</label> <textarea name="msg" id="commentLength" v-model="commentText" msg cols="30" rows="5" class="form-control" style="background-color: black; color: white;"></textarea>
+                                    </div>
+                                    <div class="form-group" id="sendComment"> <button type="button" v-if="commentText.length <= 240 && commentText.length > 0" @click="postComment()" id="postComment" class="btn">Enviar Comentario</button><p id="comment_limit" v-if="commentText.length >= 240">Superaste el limite de caracteres por comentario(240)</p> </div>
+                                    <div v-if="error">
+                                        <div class="form-group"> <label for="email">Email</label> <input type="text" name="email" v-model="email" id="email" class="form-control"> </div>
+                                        <div class="form-group"> <label for="password">Contraseña</label> <input type="password" name="password" id="password" v-model="password" class="form-control"> </div>
+                                        <div class="form-group">
+                                            <div class="form-group"> <button type="button" id="login" @click="login" class="btn">Iniciar Sesion</button> </div>
+                                        </div>
+                                    </div>
+                                    <div v-if='userEmail == "" '>
+                                        <p id="noAcc" class="text-secondary">No tenes una cuenta todavia?</p>
+                                        <div class="form-group" id="register"> <a href="login.html" type="button" id="post" class="btn">Registrate</a></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>  
+    <footer>
+        <div class="d-flex justify-content-evenly">
+            <div>
+                <ul>
+                    <li><a href="./index.html">Inicio</a></li>
+                    <li><a href="./tickets.html">Tickets</a></li>
+                    <li><a href="./store.html">Tienda</a></li>
+                    <li><a href="./gallery.html">Galeria</a></li>
+                </ul>
+            </div>
+            <div class="d-flex flex-column">
+                <img src="./img/logo-vid.png" alt="">
+                <div class="rsAccess d-flex justify-content-evenly">
+                    <a href="https://www.facebook.com/lollapaloozaar" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com/lollapaloozaar" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/lollapaloozaar" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <span><a href="./index.html">&copy; Lollapalooza, LLC</a></span>
+            <span><a href="#">Privacy</a></span>
+            <span><a href="#">Términos y Condiciones</a></span>
+        </div>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+    <!-- Vue -->
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <!-- Axios script-->
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Local JS -->
+    <script src="./js/gallery.js"></script>
+
+    <!-- Mount APP -->
+    <script>
+        app.mount('#app')
+    </script>
+
+    <!-- Sweet Alerts -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</body>
+</html>

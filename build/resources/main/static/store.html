@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>T I E N D A</title>
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="./styles/store.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
+    <!-- Bootstrap 5.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <!-- Favicon -->
+    <link rel="icon" href="./img/logo_block.png" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div id="app">
+        <div class="wrapper">
+            <header class="mb-5">
+                <nav class="nav" id="blur" style="background-color: black">
+                    <ul :class="activeNavbar? 'active':''">
+                        <li><a href="./index.html" class="first">Inicio</a></li>
+                        <li><a href="./gallery.html" class="last">Galeria</a></li>
+                        <li><a href="./tickets.html" class="last">Tickets</a></li>
+                        <li><a href="./store.html" class="last">Tienda</a></li>
+                        <li><a href="./login.html" class="last">Login</a></li>
+                        <li data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                            <a href="#" id="cart"><i class="fal fa-bags-shopping"></i><span v-if="totalCart != 0"
+                                    class="badge">{{totalCart}}</span></a>
+                        </li>
+                    </ul>
+                    <i v-if="activeNavbar" class="fas fa-times" :class="activeNavbar? 'activeMenu':''"
+                        @click="activeNavbar = !activeNavbar "></i>
+                    <i v-else class="fas fa-bars" :class="activeNavbar? 'activeMenu':''"
+                        @click="activeNavbar = !activeNavbar "></i>
+                </nav>
+            </header>
+            <div class="d-flex flex-column flex-md-row justify-content-center align-items-center flex-wrap pt-5">
+                <!-- <h2 class="page-title">Tickets Concept</h2> -->
+                <div class="ticket-card m-5" v-for="product in products">
+                    <div class="cover">
+                        <img :src="product.img[0]" alt="" />
+                        <div class="info">
+                            <p class="location">Stock:</p>
+                            <p class="date">{{product.stock}}</p>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <div class="artist">
+                            <!-- <h6 class="info">Save Rock and Roll</h6> -->
+                            <h4 class="name text-center fs-4">{{product.description}}</h4>
+                        </div>
+                        <div class="price">
+                            <!-- <div class="from">From</div> -->
+                            <div class="value">${{product.price}}</div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="footer">
+                        <!-- <button class="btn toggle-tickets"><ion-icon name="cart-outline"></ion-icon></button> -->
+                        <button class="button buttonicon"@click="productDetails(product.id)" ><i class="fal fa-shopping-cart" size="large"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <footer class="fixed-button">
+            <div class="d-flex justify-content-evenly">
+                <div>
+                    <ul>
+                        <li><a href="./index.html">Inicio</a></li>
+                        <li><a href="./tickets.html">Tickets</a></li>
+                        <li><a href="./store.html">Tienda</a></li>
+                        <li><a href="./gallery.html">Galeria</a></li>
+                    </ul>
+                </div>
+                <div class="d-flex flex-column">
+                    <img src="./img/logo-vid.png" alt="">
+                    <div class="rsAccess d-flex justify-content-evenly">
+                        <a href="https://www.facebook.com/lollapaloozaar" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com/lollapaloozaar" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com/lollapaloozaar" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <span><a href="./index.html">&copy; Lollapalooza, LLC</a></span>
+                <span><a href="#">Privacy</a></span>
+                <span><a href="#">Términos y Condiciones</a></span>
+            </div>
+        </footer>
+        <!-- Cart Canvas -->
+        <div class="container offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+            aria-labelledby="offcanvasRightLabel">
+            <div class="shopping-cart">
+                <div class="shopping-cart-header d-flex flex-row justify-content-between align-items-center">
+                    <div class="d-flex justify-content-center">
+                        <i class="fas fa-times" data-bs-dismiss="offcanvas" aria-label="Close"></i>
+                        <i class="fal fa-bags-shopping"></i><span class="badge">{{totalCart}}</span>
+                    </div>
+                    <div class="shopping-cart-total d-flex flex-column justify-content-center align-items-center m-3">
+                        <div class="lighter-text">Total:</div>
+                        <div class="main-color-text">{{formatBalance(totalPrice)}}</div>
+                    </div>
+                </div>
+                <!--end shopping-cart-header -->
+
+                <ul class="shopping-cart-items">
+                    <li v-for="(ticket, i) in cart.ticketDtos" class="clearfix">
+                        <div class="d-flex flex-row m-1">
+                            <div class="deleteItems">
+                                <i class="far fa-trash-alt" @click="deleteTicket(i)"></i>
+                            </div>
+                            <img :src="ticket.img" alt="item1" />
+                            <div class="d-flex flex-column">
+                                <span class="item-name">Fecha: {{ticket.date}}</span>
+                                <span class="item-name">Sede: {{ticket.campus}}</span>
+                                <span class="item-price">Precio: {{formatBalance(calculatePrice)}}</span>
+                                <span class="item-quantity">Cantidad: 1</span>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li v-for="(prod, i) in cart.cartdtos" class="clearfix">
+                        <div class="d-flex flex-row m-1">
+                            <div class="deleteItems">
+                                <i class="far fa-trash-alt" @click="deleteProduct(i)"></i>
+                            </div>
+                            <img :src="getImg(prod.idItem)" alt="item1" />
+                            <div class="d-flex flex-column">
+                                <span class="item-name">{{getName(prod.idItem)}}</span>
+                                <span class="item-price">{{formatBalance(getPrice(prod.idItem))}}</span>
+                                <span class="item-quantity">Cantidad: {{prod.quantity}}</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div v-if="cart.ticketDtos.length == 2" class="discount">Se aplicó 10% de descuento en tickets</div>
+                <div v-if="cart.ticketDtos.length > 2" class="discount">Se aplicó 20% de descuento en tickets</div>
+                <a href="#" @click="goToPay" class="purchaseButton">Realizar compra</a>
+            </div>
+            <!--end shopping-cart -->
+        </div>
+        
+    </div>
+    <!-- IonIcons -->
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+
+    <!-- VueJS -->
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <!-- Local JS -->
+    <script src="./js/store.js"></script>
+
+    <!-- Sweet Alerts -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</body>
+
+</html>

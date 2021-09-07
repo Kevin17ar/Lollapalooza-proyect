@@ -1,0 +1,419 @@
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+.page-title {
+    text-align: center;
+    color: #fff;
+    font-weight: 100;
+    font-size: 40px;
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+.wrapper {
+    font-family: 'Varela Round';
+    width: 100%;
+    min-height: 930px;
+    display: block;
+    background-color: white;
+    padding-bottom: 50px;
+}
+
+.wrapper:after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: block;
+    content: "";
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.wrapper .container {
+    z-index: 5;
+    position: relative;
+}
+
+.wrapper footer {
+    position: absolute;
+    z-index: 3;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.wrapper footer h3 {
+    color: #fff;
+    font-weight: 200;
+}
+
+.wrapper footer .social-icon {
+    color: #fff;
+    opacity: 0.8;
+    font-size: 34px;
+    margin: 20px;
+}
+
+.wrapper footer .social-icon:hover {
+    opacity: 1;
+}
+
+.ticket-card {
+    margin-top: 15vh;
+    margin-bottom: 15vh;
+    max-width: 500px;
+    background: whitesmoke;
+    border-radius: 4px;
+}
+
+
+/* .cover{
+	width: 15vw;
+} */
+
+
+/* .row{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	/* flex-wrap: wrap; */
+
+
+/* } */
+
+.ticket-card:hover .cover img,
+.ticket-card.active .cover img {
+    -moz-transform: translate(0, -50px);
+    -o-transform: translate(0, -50px);
+    -ms-transform: translate(0, -50px);
+    -webkit-transform: translate(0, -50px);
+    transform: translate(0, -50px);
+    box-shadow: 0 10px 20px -4px rgba(22, 22, 22, .5);
+}
+
+.ticket-card .cover {
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    margin: 15px;
+}
+
+.ticket-card .cover img {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    margin-top: -30px;
+    box-shadow: 0 10px 16px -6px rgba(22, 22, 22, .5);
+    border-radius: 4px;
+    -moz-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+    -webkit-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+    -moz-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+    -o-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+    -ms-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+    transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+}
+
+.ticket-card .cover .info {
+    position: absolute;
+    width: 100%;
+    bottom: -10px;
+    padding: 0 15px;
+    color: #777;
+}
+
+.ticket-card .cover .info .location,
+.ticket-card .cover .info .date {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f3f3f3;
+    width: 50%;
+}
+
+.ticket-card .cover .info .location {
+    float: left;
+}
+
+.ticket-card .cover .info .date {
+    float: right;
+    text-align: right;
+}
+
+.ticket-card .cover .info .fa {
+    color: #999;
+    margin-right: 5px;
+}
+
+.ticket-card .artist {
+    float: left;
+}
+
+.ticket-card .artist .info {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 0;
+}
+
+.ticket-card .artist .name {
+    font-weight: 200;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.ticket-card .ticket {
+    float: left;
+}
+
+.ticket-card .ticket small {
+    font-size: 75%;
+}
+
+.ticket-card .price {
+    float: right;
+    text-align: right;
+}
+
+.ticket-card .price .from {
+    color: #bbb;
+}
+
+.ticket-card .price .value {
+    font-size: 28px;
+    font-weight: 200;
+    color: #0bf;
+    margin-top: -5px;
+}
+
+.ticket-card .price .value b {
+    font-size: 18px;
+    font-weight: 200;
+}
+
+.ticket-card .list-unstyled {
+    max-height: 200px;
+    overflow-x: scroll;
+    background: #eee;
+    margin-bottom: 0;
+    box-shadow: inset 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.ticket-card .list-unstyled li {
+    border-bottom: 1px dotted #ccc;
+    padding: 5px 30px;
+    overflow: hidden;
+    width: 100%;
+    display: block;
+    position: relative;
+}
+
+.ticket-card .list-unstyled li .btn-buy {
+    position: absolute;
+    right: 15px;
+    top: 13px;
+    padding: 8px 20px;
+    border-radius: 6px;
+    background: #0bf;
+    border: 0;
+    opacity: 0;
+    -webkit-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+    -moz-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+    -o-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+    -ms-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+    transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 300ms ease, opacity 300ms ease;
+}
+
+.ticket-card .list-unstyled li:hover .btn-buy {
+    opacity: 1;
+}
+
+.ticket-card .list-unstyled li:last-child {
+    border-bottom: none;
+}
+
+.ticket-card .list-unstyled li:before,
+.ticket-card .list-unstyled li:after {
+    display: table;
+    content: " ";
+    clear: both;
+}
+
+.ticket-card .list-unstyled li .price .value {
+    color: #444;
+    font-size: 22px;
+    margin-top: 10px;
+}
+
+.ticket-card .body {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 30px 15px;
+}
+
+.ticket-card .footer .btn {
+    width: 100%;
+    background: transparent;
+    border-top: 1px dotted #bbb;
+    border-radius: 0;
+    padding: 15px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #666;
+    box-shadow: none;
+}
+
+.ticket-card .footer .btn:focus,
+.ticket-card .footer .btn:hover,
+.ticket-card .footer .btn:active {
+    outline: none !important;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    display: flex;
+    height: 50px;
+    padding: 0;
+    background: #6394f8;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 9;
+}
+
+.buttontext,
+.buttonicon {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 24px;    
+    height: 100%;
+}
+
+.clearfix img{
+    width: 120px;
+    border-radius: 5px;
+}
+
+/* CANVAS*/
+.discount{
+    text-align: center;
+    color: var(--color-green);
+    font-weight: bold;
+}
+.container{
+    overflow: auto;
+    margin: auto;
+    min-width: 40vw;
+}
+.badge {
+    align-self: center;
+    border-radius: 10px;
+    color: white;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 1;
+    padding: 3px 7px;
+    text-align: center;
+    white-space: nowrap;
+}
+.shopping-cart {
+    margin: 20px 0;
+    float: right;
+    background: white;
+    width: 100%;
+    position: relative;
+    border-radius: 3px;
+}
+.shopping-cart .shopping-cart-header {
+    background-color: rgba(72, 72, 71, 0.38);
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 15px;
+}
+
+.shopping-cart .shopping-cart-items {
+    padding-top: 20px;
+    min-width: 90%;
+}
+.shopping-cart .shopping-cart-items li {
+    margin-bottom: 18px;
+    list-style-type: none;
+}
+.shopping-cart .shopping-cart-items img {
+    float: left;
+    margin-right: 12px;
+}
+.shopping-cart .shopping-cart-items .item-name {
+    display: block;
+    padding-top: 10px;
+    font-size: 16px;
+}
+.shopping-cart .shopping-cart-items .item-price {
+    color: #6394f8;
+    margin-right: 8px;
+}
+.shopping-cart .shopping-cart-items .item-quantity {
+    color: #abb0be;
+}
+.shopping-cart:after {
+    bottom: 100%;
+    left: 89%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: white;
+    border-width: 8px;
+    margin-left: -8px;
+}
+.cart-icon {
+    color: #515783;
+    font-size: 24px;
+    margin-right: 7px;
+    float: left;
+}
+.lighter-text{
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 2px rgba(22, 22, 22, .5);
+}
+.main-color-text{
+    font-weight: bold;
+    color: var(--color-green);
+   /* #0275d8; */
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.33);
+}
+.purchaseButton {
+    background: #6394f8;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+    border-radius: 3px;
+    font-size: 16px;
+    margin: 25px 0 15px 0;
+}
+.purchaseButton:hover {
+    background: #729ef9;
+}
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.deleteItems>i{
+    color: red;
+}
+.deleteItems>i:hover{
+    color: red !important;
+    text-shadow: none;
+}
