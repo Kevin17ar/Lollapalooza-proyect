@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductDto(Long id) {
-        return new ProductDTO(productRepository.getById(id));
+        return new ProductDTO(productRepository.findById(id).get());
     }
 
     @Override
@@ -77,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<Object> eraseProduct(Long idProd) {
 
-        Product product= productRepository.getById(idProd);
+        Product product = productRepository.findById(idProd).orElse(null);
         product.setDeleted(true);
         productRepository.save(product);
         return new ResponseEntity<>("Producto Borrado",HttpStatus.OK);

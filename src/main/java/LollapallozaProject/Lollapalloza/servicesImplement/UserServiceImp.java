@@ -34,7 +34,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User getUser(Long idUser) {
-        return userRepository.getById(idUser);
+        return userRepository.findById(idUser).get();
     }
 
     @Override
@@ -49,8 +49,8 @@ public class UserServiceImp implements UserService {
 
     @Override
     public ResponseEntity<Object> eraseUser(Long idUser) {
-        User user= userRepository.getById(idUser);
-       user.setDeleted(true);
+        User user= userRepository.findById(idUser).get();
+        user.setDeleted(true);
         userRepository.save(user);
         return new ResponseEntity<>("Usuerio Borrado", HttpStatus.OK);
 

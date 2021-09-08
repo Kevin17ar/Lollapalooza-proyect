@@ -32,20 +32,34 @@ const app = Vue.createApp({
     },
     methods: {
         pay() {
-            axios({
-                    method: "post",
-                    url: "http://localhost:8686/api/clients/pay",
+            // axios({
+            //         method: "post",
+            //         url: "http://localhost:8686/api/clients/pay",
+            //         data: {
+            //             cardHolder: this.cardHolder,
+            //             cardNumber: this.cardNumber,
+            //             cvv: parseInt(this.cvv),
+            //             amount: parseInt(this.amount),
+            //             description: "Lollapalooza-market"
+            //         },
+            //     })
+
+            var data = {
+                cardHolder: this.cardHolder,
+                cardNumber: this.cardNumber,
+                cvv: parseInt(this.cvv),
+                amount: parseInt(this.amount),
+                description: "Lollapalooza-market"
+            }
+
+            fetch("http://localhost:8686/api/clients/pay", {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify(data), // data can be `string` or {object}!                
+                    // headers: {
+                    //     'Content-Type': 'application/json',
+                    //     'Accept': 'application/json',
+                    // },
                     mode: 'no-cors',
-                    data: {
-                        cardHolder: this.cardHolder,
-                        cardNumber: this.cardNumber,
-                        cvv: parseInt(this.cvv),
-                        amount: parseInt(this.amount),
-                        description: "Lollapalooza-market"
-                    },
-                    headers: {
-                        'Access-Control-Allow-Origin': "http://localhost:8080",
-                    },
                 })
                 .then(res => {
                     if (res.status == 200 || res.status == 202) {

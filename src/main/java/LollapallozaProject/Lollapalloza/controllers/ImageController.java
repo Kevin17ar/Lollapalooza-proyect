@@ -25,7 +25,9 @@ public class ImageController {
 
     @GetMapping("/images/{id}")
     public ImageDto getImage(@PathVariable Long id){
-        return new ImageDto(imageRepository.getById(id));
+        Image image = imageRepository.findById(id).orElse(null);
+        assert image != null;
+        return new ImageDto(image);
     }
 
 }
