@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.4.4'
+	id 'org.springframework.boot' version '2.5.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
@@ -24,14 +24,14 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.4'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest:2.5.4'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.4'
+	compileOnly 'org.projectlombok:lombok:1.18.20'
+	runtimeOnly 'com.h2database:h2:1.4.200'
+	implementation 'org.springframework.boot:spring-boot-starter-security:2.5.4'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.4'
 }
 bootRun {
 	sourceResources sourceSets.main
