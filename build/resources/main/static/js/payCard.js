@@ -52,13 +52,13 @@ const app = Vue.createApp({
                 description: "Lollapalooza-market"
             }
 
-            fetch("http://localhost:8686/api/clients/pay", {
+            fetch("https://bs2banking.herokuapp.com/api/clients/pay", {
                     method: 'POST', // or 'PUT'
                     body: JSON.stringify(data), // data can be `string` or {object}!                
-                    // headers: {
-                    //     'Content-Type': 'application/json',
-                    //     'Accept': 'application/json',
-                    // },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
                     mode: 'no-cors',
                 })
                 .then(res => {
